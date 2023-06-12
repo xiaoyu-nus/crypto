@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "wallets",
+  "info": {
+    "singularName": "wallet",
+    "pluralName": "wallets",
+    "displayName": "wallet"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "walletName": {
+      "type": "string",
+      "required": true,
+      "maxLength": 20,
+      "unique": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "walletName",
+      "required": true
+    },
+    "totalBalance": {
+      "type": "decimal",
+      "required": true
+    }
+  }
+}
