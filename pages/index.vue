@@ -12,5 +12,11 @@
 import Container from "~/components/Container.vue";
 import TableCard from "~/components/TableCard.vue";
 import WalletTable from "~/components/wallet/WalletTable.vue";
-export default {};
+export default {
+  components: {
+    Container,
+    TableCard,
+    WalletTable,
+  },
+};
 </script>
