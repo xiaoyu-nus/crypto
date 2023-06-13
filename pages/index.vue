@@ -2,21 +2,25 @@
   <div>
     <Container title="Wallets" subtitle="$0.00">
       <TableCard>
-        <WalletTable />
+        <WalletTable :wallets="wallets" />
       </TableCard>
     </Container>
   </div>
 </template>
 
-<script>
+<script setup>
 import Container from "~/components/Container.vue";
 import TableCard from "~/components/TableCard.vue";
 import WalletTable from "~/components/wallet/WalletTable.vue";
-export default {
-  components: {
-    Container,
-    TableCard,
-    WalletTable,
-  },
-};
+
+// const { data: data } = await useAPIFetch("/api/wallets/", {
+//   onRequestError({ request, options, error }) {
+//     console.log("request error", error);
+//   },
+// });
+const { data: data } = await useAPIFetch("/api/wallets/");
+let wallets;
+if (data && data.value) {
+  wallets = data.value.data;
+}
 </script>

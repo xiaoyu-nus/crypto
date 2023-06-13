@@ -1,8 +1,9 @@
-import { useWalletStore } from "~/store";
+import { useMainStore } from "~/store";
+
 export default defineNuxtPlugin(({ $pinia }: any) => {
   return {
     provide: {
-      store: useWalletStore($pinia),
+      store: useMainStore($pinia),
     },
   };
 });
