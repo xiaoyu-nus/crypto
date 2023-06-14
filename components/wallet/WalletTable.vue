@@ -58,6 +58,7 @@
               </svg>
             </div>
             <input
+              v-model="searchKeyword"
               type="text"
               id="table-search"
               class="block p-2 pl-10 placeholder:font-medium transition ease-in-out border focus:bg-white border-transparent hover:bg-white placeholder:text-sm text-sm text-gray-900 rounded-md w-80 bg-gray-100 focus:ring-blue-500 hover:ring-blue-500 hover:outline-none hover:border-blue-500 focus:outline-none focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -147,16 +148,19 @@ const showAddWallet = ref(false);
 const nameInput = ref();
 const isDirty = ref(false);
 const isNameTaken = ref(false);
+const searchKeyword = ref("");
 
 const emit = defineEmits(["addWallet"]);
 
 const formattedWallets = computed(() => {
-  return props.wallets.map((w) => {
-    return {
-      walletName: w.attributes.walletName,
-      totalBalance: w.attributes.totalBalance.toFixed(2),
-    };
-  });
+  return props.wallets
+    .filter((w) => w.attributes.walletName.includes(searchKeyword.value))
+    .map((w) => {
+      return {
+        walletName: w.attributes.walletName,
+        totalBalance: w.attributes.totalBalance.toFixed(2),
+      };
+    });
 });
 
 const canProceed = computed(() => {

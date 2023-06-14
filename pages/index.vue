@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Container title="Wallets" subtitle="$0.00">
+    <Container title="Wallets" :subtitle="'$ ' + getTotalBalance">
       <TableCard>
         <WalletTable
           :wallets="wallets"
@@ -27,6 +27,19 @@ import { ref, nextTick } from "vue";
 // get all wallets
 const wallets = ref([]);
 getWallets();
+
+const getTotalBalance = computed(() => {
+  console.log("called get total");
+  if (wallets.value.length > 0) {
+    console.log("data retrieved");
+    let total = 0;
+    wallets.value.forEach((x) => (total += x.attributes.totalBalance));
+    return total.toFixed(2);
+  } else {
+    return "0";
+  }
+});
+
 async function getWallets() {
   try {
     const { data: data } = await useAPIFetch("/api/wallets/");

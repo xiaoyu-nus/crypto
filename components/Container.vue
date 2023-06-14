@@ -14,5 +14,18 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+const props = defineProps({
+  title: {
+    type: String,
+    default: "",
+    required: false,
+  },
+  subtitle: {
+    type: String,
+    default: "",
+    required: false,
+  },
+});
+</script>
 <style lang=""></style>
