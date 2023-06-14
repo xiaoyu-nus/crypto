@@ -18,6 +18,8 @@ import WalletTable from "~/components/wallet/WalletTable.vue";
 //     console.log("request error", error);
 //   },
 // });
+
+// get all wallets
 const { data: data } = await useAPIFetch("/api/wallets/");
 let wallets;
 if (data && data.value) {
