@@ -2,7 +2,10 @@
   <div>
     <Container title="Wallets" subtitle="$0.00">
       <TableCard>
-        <WalletTable :wallets="wallets" />
+        <WalletTable
+          :wallets="wallets"
+          @add-wallet="(name) => onAddWallet(name)"
+        />
       </TableCard>
     </Container>
   </div>
@@ -13,6 +16,8 @@ import Container from "~/components/Container.vue";
 import TableCard from "~/components/TableCard.vue";
 import WalletTable from "~/components/wallet/WalletTable.vue";
 
+import { ref, nextTick } from "vue";
+
 // const { data: data } = await useAPIFetch("/api/wallets/", {
 //   onRequestError({ request, options, error }) {
 //     console.log("request error", error);
@@ -20,9 +25,43 @@ import WalletTable from "~/components/wallet/WalletTable.vue";
 // });
 
 // get all wallets
-const { data: data } = await useAPIFetch("/api/wallets/");
-let wallets;
-if (data && data.value) {
-  wallets = data.value.data;
+const wallets = ref([]);
+getWallets();
+async function getWallets() {
+  try {
+    const { data: data } = await useAPIFetch("/api/wallets/");
+    if (data && data.value) {
+      wallets.value = data.value.data;
+    }
+  } catch (error) {
+    console.log("Get Error:", error);
+  }
+}
+
+async function onAddWallet(name) {
+  try {
+    const { data: data } = await useAPIFetch("/api/wallets/", {
+      method: "POST",
+      body: {
+        data: {
+          walletName: name,
+          totalBalance: 0,
+          slug: toKebabCase(name),
+        },
+      },
+    });
+    if (data) {
+      getWallets();
+    }
+  } catch (error) {
+    console.log("Post Error:", error);
+  }
+}
+
+function toKebabCase(str) {
+  return str
+    .replace(/([a-z])([A-Z])/g, "$1-$2")
+    .replace(/[\s_]+/g, "-")
+    .toLowerCase();
 }
 </script>
