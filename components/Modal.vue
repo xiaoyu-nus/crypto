@@ -54,6 +54,7 @@
           <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
             <button
               type="button"
+              :disabled="!canProceed"
               @click="$emit('confirmed')"
               :class="
                 canProceed
