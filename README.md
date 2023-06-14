@@ -1,4 +1,4 @@
-# Nuxt 3 Minimal Starter
+# Nuxt 3 
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
@@ -30,6 +30,12 @@ pnpm run dev
 
 # yarn
 yarn dev
+```
+
+## Strapi Server
+```bash
+cd cms
+npm run develop
 ```
 
 ## Production
