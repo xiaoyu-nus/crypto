@@ -20,6 +20,7 @@
   "dependencies": {
     "@nuxtjs/strapi": "^1.9.3",
     "@pinia/nuxt": "^0.4.11",
+    "lodash.debounce": "^4.0.8",
     "pinia": "^2.1.3"
   },
   "overrides": {

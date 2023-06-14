@@ -14,9 +14,23 @@
         ref="nameInput"
         id="table-search"
         maxlength="20"
-        class="block p-2 pl-4 w-full placeholder:font-medium transition ease-in-out border focus:bg-white border-transparent hover:bg-white placeholder:text-sm text-sm text-gray-900 rounded-md w-80 bg-gray-100 focus:ring-blue-500 hover:ring-blue-500 hover:outline-none hover:border-blue-500 focus:outline-none focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        :class="
+          !canProceed && isDirty
+            ? 'ring-red-500 border-red-500 focus:ring-red-500 hover:ring-red-500 hover:border-red-500  focus:border-red-500 dark:focus:ring-red-500 dark:focus:border-red-500'
+            : 'focus:ring-blue-500 hover:ring-blue-500 hover:border-blue-500  focus:border-blue-500 dark:focus:ring-blue-500 dark:focus:border-blue-500'
+        "
+        class="block p-2 pl-4 w-full placeholder:font-medium transition ease-in-out border hover:outline-none focus:outline-none focus:bg-white dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white border-transparent hover:bg-white placeholder:text-sm text-sm text-gray-900 rounded-md w-80 bg-gray-100"
         placeholder="My wallet"
       />
+      <p v-show="isNameTaken" class="text-red-500 text-sm text-left">
+        This name is taken. Please use a distinct name.
+      </p>
+      <p
+        v-show="isDirty && newName.length == 0"
+        class="text-red-500 text-sm text-left"
+      >
+        Name is required.
+      </p>
     </div>
   </Modal>
   <div>
@@ -131,6 +145,8 @@ const props = defineProps({
 const newName = ref("");
 const showAddWallet = ref(false);
 const nameInput = ref();
+const isDirty = ref(false);
+const isNameTaken = ref(false);
 
 const emit = defineEmits(["addWallet"]);
 
@@ -144,7 +160,13 @@ const formattedWallets = computed(() => {
 });
 
 const canProceed = computed(() => {
-  return newName.value.length > 0;
+  if (newName.value.length !== 0) {
+    isDirty.value = true;
+  }
+  isNameTaken.value =
+    props.wallets.filter((w) => w.attributes.walletName == newName.value)
+      .length !== 0;
+  return newName.value.length > 0 && !isNameTaken.value;
 });
 
 function addWallet() {
@@ -155,10 +177,14 @@ function addWallet() {
 function onConfirm() {
   showAddWallet.value = false;
   emit("addWallet", newName.value);
+  isDirty.value = false;
+  newName.value = "";
 }
 
 function onCancel() {
   showAddWallet.value = false;
+  isDirty.value = false;
+  newName.value = "";
 }
 </script>
 <style lang=""></style>

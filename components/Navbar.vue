@@ -197,10 +197,5 @@
     </nav>
   </div>
 </template>
-<script>
-export default {
-  name: "Navbar",
-  components: {},
-};
-</script>
+<script setup></script>
 <style lang=""></style>

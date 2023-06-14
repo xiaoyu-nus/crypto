@@ -14,16 +14,5 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "Container",
-  props: {
-    title: String,
-    subtitle: String,
-  },
-  data() {
-    return {};
-  },
-};
-</script>
+<script setup></script>
 <style lang=""></style>
